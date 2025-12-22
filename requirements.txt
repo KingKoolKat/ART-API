@@ -1,0 +1,7 @@
+numpy<2
+fastapi
+uvicorn[standard]
+python-multipart
+torch
+torchvision
+pillow
