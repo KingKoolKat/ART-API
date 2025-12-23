@@ -1,6 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from PIL import Image
 import io
 import os
@@ -14,9 +13,6 @@ import psycopg2.extras
 from model import load_model, load_label_map, predict_pil
 
 app = FastAPI(title="Art Style Classifier")
-
-# Serve locally-seeded images (created by seed_wikiart.py) at /static/...
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,
@@ -135,7 +131,7 @@ def gallery(
     Returns up to `limit` artworks from the `artworks` table that match the given style.
     Expects you ran seed_wikiart.py to populate:
       - table: artworks(id, title, artist, style, image_url)
-      - static/ directory with files referenced by image_url (/static/...)
+      - directory with files referenced by image_url 
     """
     sql = """
     SELECT id, title, artist, style, image_url
